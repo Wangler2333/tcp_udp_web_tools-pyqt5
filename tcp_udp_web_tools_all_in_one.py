@@ -20,6 +20,7 @@ import threading
 import ctypes
 import inspect
 import re
+import time
 
 
 class Ui_TCP(QDialog):
@@ -412,7 +413,7 @@ class Ui_TCP(QDialog):
             try:
                 self.client_socket, self.client_address = self.tcp_socket.accept()
             except Exception as ret:
-                pass
+                time.sleep(0.001)
             else:
                 self.client_socket.setblocking(False)
                 # 将创建的客户端套接字存入列表
@@ -545,7 +546,7 @@ class Ui_TCP(QDialog):
             try:
                 self.client_socket, self.client_address = self.tcp_socket.accept()
             except Exception as ret:
-                pass
+                time.sleep(0.001)
             else:
                 self.client_socket.setblocking(False)
                 # 将创建的客户端套接字存入列表
