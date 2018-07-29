@@ -5,6 +5,7 @@ import socket
 import threading
 import re
 import sys
+import time
 
 
 class WebLogic(tcp_udp_web_ui.ToolsUi):
@@ -49,7 +50,7 @@ class WebLogic(tcp_udp_web_ui.ToolsUi):
             try:
                 client_socket, client_address = self.tcp_socket.accept()
             except Exception as ret:
-                pass
+                time.sleep(0.001)
             else:
                 client_socket.setblocking(False)
                 # 将创建的客户端套接字存入列表
