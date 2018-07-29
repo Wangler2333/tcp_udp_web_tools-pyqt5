@@ -69,8 +69,18 @@ class MainWindow(tcp_logic.TcpLogic, udp_logic.UdpLogic, web_logic.WebLogic):
         """
         # 获取本机ip
         self.lineEdit_ip_local.clear()
-        my_addr = socket.gethostbyname(socket.gethostname())
-        self.lineEdit_ip_local.setText(str(my_addr))
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            s.connect(('8.8.8.8', 80))
+            my_addr = s.getsockname()[0]
+            self.lineEdit_ip_local.setText(str(my_addr))
+        except Exception as ret:
+            # 若无法连接互联网使用，会调用以下方法
+            # self.signal_write_msg.emit("无法获取ip，请连接网络！\n")
+            my_addr = socket.gethostbyname(socket.gethostname())
+            self.lineEdit_ip_local.setText(str(my_addr))
+        finally:
+            s.close()
 
     def send(self):
         """
