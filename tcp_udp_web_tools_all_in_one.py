@@ -309,9 +309,11 @@ class Ui_TCP(QDialog):
             self.lineEdit_ip_local.setText(str(my_addr))
         except Exception as ret:
             # 若无法连接互联网使用，会调用以下方法
-            # self.signal_write_msg.emit("无法获取ip，请连接网络！\n")
-            my_addr = socket.gethostbyname(socket.gethostname())
-            self.lineEdit_ip_local.setText(str(my_addr))
+            try:
+                my_addr = socket.gethostbyname(socket.gethostname())
+                self.lineEdit_ip_local.setText(str(my_addr))
+            except Exception as ret_e:
+                self.signal_write_msg.emit("无法获取ip，请连接网络！\n")
         finally:
             s.close()
 
